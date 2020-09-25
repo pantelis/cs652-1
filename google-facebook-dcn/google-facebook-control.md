@@ -1,1 +1,33 @@
+## Control Plane
+Considering the control plane in the new datacenter architectures, at a high level, IP addressing and other layer 3 mechanisms won out, becoming the basis for forwarding between the different switches to the end server. Early on in the planning of their datacenter network architectures, Google and Facebook diverged. Both companies started by evaluating the use of existing protocols versus developing their own. In the case of Google, the decision was to develop their own. In the case of Facebook, they chose to use standard protocols that were already established. These decisions are broken down below.
 
+### Google
+#### Protocols
+Google identifies a number of reasons for their decision to build their own control plane. One of the biggest motivators at the outset for developing their own control plane was to leverage the fact that the network was homogeneous. This presents some benefits which can be used to their advantage when customizing the control plane.
+
+Enumerating some more specific reasons behind the decision to build their own control plane:
+
+1. Existing routing protocols did not have good support for multipath, equal cost routing.
+2. There were no high quality open source routing stacks, and it proved to be a lot of work to modify the hardware to support running the control-protocol packets through the switch setup.
+3. Broadcast-based routing protocols across a large fabric of scale might produce a significant amount of overhead.
+4. Network management would be simpler using a customized solution, as opposed to maintaining hundreds of independent switch stacks and configurations.
+
+In their control plane organization, Google utilized an out-of-band Control Plane Network (CPN), across which a centralized router-controller would collect dynamic link state information and redistribute to all the switches. The switches would then recalculate their forwarding tables based on the incoming link state information, as well as knowing the (static) topology. For ease of control purposes, Google considered its datacenter network as one single large fabric with thousands of ports as opposed to individual switches that must learn about the fabric. The Control Plane for Google's datacenter network consists primarily of their custom protocol called Firepath, but it also leverages the external Border Gateway Protocol  for use communicating with external networks. 
+
+##### Firepath
+Firepath is the core protocol that provides the key functionality for Google's datacenter. In implementation, there is a Firepath client running on each fabric switch, and a set of redundant Firepath masters running on a selected subset of the spine switches. Specifically, it allows for neighbor discovery between neighbor switches, a keepalive functionality (i.e., a heartbeat function), exchange of link state information from the master controller, and standard interior routing between switches, all of which communication happens across the CPN. Firepath also contains a master redundancy function between the set of masters only.
+
+|Function|Description|
+|--------|-----------|
+|Neighbor Discovery (ND)|Exchange of local port ID, expected peer port ID, discovered peer port ID, and link error signal to identify any issues with online liveness (i.e., if a peer is unavailable) and peer correctness (i.e., to make sure that cabling is correct). This information is propagated to the Interface Manager module on each switch and used to determine if a port is up. The port may be considered up only if it is physically up (PHY UP) and ND is correct (ND UP).|
+|keepalive|Used both between switches and between the master controller and switches. Between switches, can determine if a peer is unavailable, which will eventually be reported and the routing paths adjusted. Between the master controller and switches, it is used in updating the link state database. The master controller periodically sends out messages containing its master ID and the current link state database number. If a client switch has lost synchronization with the master controller, it asks for the full link state database.|
+|Link state exchange|Each Firepath client sends information about its interface state to the master controller across the CPN. Then the master controller constructs the link state database with a sequential version number every time there are routing changes to be made, due to planned and unplanned network events. The master sends out the link state database via UDP/IP to each client, and the clients recompute shortest path forwarding using Equal-Cost Multipath (ECMP).|
+|Interior routing|Layer 3 subnets are assigned to top of rack switches to aid aggregation in the limited forwarding tables in merchant silicon. Layer 2 subnets are assigned to reduce the broadcasat domain. Using ECMP and the link state information received from the master controller, switches determine the shortest path to reach other destinations, and route accordingly.
+|Firepath Master Redundancy Protocol (FMRP)|The centralized master is a critical component of the Firepath system, collecting and distributing interface state information and synchronizing the Firepath clients. FMRP handles election of the master and maintains convergence between the set of active and backup masters.|
+
+##### External Border Gateway Protocol (eBGP)
+eBGP is used to handle communication with external networks. In the architecture, there is an isolated layer of switches to peer with the external routers. These routers integrate BGP with Firepath to enable the BGP stack on these external routers to communicate inband and to support the exchange of route information between BGP and Firepath. Therefore, the network architecture allows for outbound communication to be managed in one route through Firepath.
+
+#### Configuration
+
+### Facebook
