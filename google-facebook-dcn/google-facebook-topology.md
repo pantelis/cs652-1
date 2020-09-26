@@ -29,11 +29,15 @@ Where Google went with a chassis-style three-tiered Clos architecture, Facebook 
 
 ![A sample pod](./images/Facebook_sample_pod.png)
 
-Facebook designed their network with an equal amount of uplink capacity for each downlink port to a ToR, meaning that the oversubscription ratio is 1:1 and the network is non-blocking. On the whole, the network is built of four independent planes of spine switches, with up to 48 switches available. The fabric switches of the pods connect to each of the spine switches on its local plane. Finally, the spine switches connect to edge pods, which contain a flexible number of edge switches. These edge pods allow for external connectivity to outside the datacenter network. The edge pods are each capable of providing up to 7.68Tbps to the backbone, and are scalable to 100G and higher port speeds.
+Facebook designed their network with an equal amount of uplink capacity for each downlink port to a ToR, meaning that the oversubscription ratio is 1:1 and the network is non-blocking. On the whole, the network is built of four independent planes of spine switches, with up to 48 switches available. The fabric switches of the pods connect to each of the spine switches on its local plane. Finally, the spine switches connect to edge pods, which contain a flexible number of edge switches. These edge pods allow for external connectivity to outside the datacenter network. The edge pods are each capable of providing up to 7.68Tbps to the backbone, and are scalable to 100G and higher port speeds. The complete arrangement of the different pods and planes can be seen here, imagined in three-dimensions:
 
 ![Complete schematic of fabric network topology](./images/Facebook_complete_topology.png)
 
-By "pod-ifying" their network, the modularity in the design allows for easy scaling:
+This topology may be abstracted in two dimensions similar to below:
+
+![2D Abstraction of Facebook topology](./images/Facebook_2d_abstract.png)
+
+By "pod-ifying" their network, the modularity in the design allows for easy scaling in any dimension:
 |Capacity to Scale|Component to Scale|
 |-----------------|---------------|
 |Compute Capacity|Add additional Server Pods|
