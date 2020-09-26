@@ -25,6 +25,18 @@ The decision Google went with was option (iv), to build out an isolated layer of
 
 ### Facebook
 
-Where Google went with a chassis-style three-tiered Clos architecture, Facebook built their fabric network based on pods, and connecting the pods across the network. They define a "pod" simply as the unit of their network; it carries no physical definitions. However, the way Facebook designed their network based on these pods allowed them to take advantage of the architecture that they already had in place, using four fabric switches to support 48 ToRs in one pod:
+Where Google went with a chassis-style three-tiered Clos architecture, Facebook built their fabric network based on pods, and connecting the pods across the network. They define a "pod" simply as the unit of their network; it carries no physical definitions. However, the way Facebook designed their network based on these pods allowed them to take advantage of the architecture that they already had in place, using four fabric switches to support 48 ToRs in one pod. This pod unit is smaller than the previous cluster unit, allowing for easy integration into the datacenter floor plan. Furthermore, the architecture requires only mid-size switches to aggregate the ToRs into these pods, again citing the ease of scaling out over scaling up.
 
 ![A sample pod](./images/Facebook_sample_pod.png)
+
+Facebook designed their network with an equal amount of uplink capacity for each downlink port to a ToR, meaning that the oversubscription ratio is 1:1 and the network is non-blocking. On the whole, the network is built of four independent planes of spine switches, with up to 48 switches available. The fabric switches of the pods connect to each of the spine switches on its local plane. Finally, the spine switches connect to edge pods, which contain a flexible number of edge switches. These edge pods allow for external connectivity to outside the datacenter network. The edge pods are each capable of providing up to 7.68Tbps to the backbone, and are scalable to 100G and higher port speeds.
+
+![Complete schematic of fabric network topology](./images/Facebook_complete_topology.png)
+
+By "pod-ifying" their network, the modularity in the design allows for easy scaling:
+|Capacity to Scale|Component to Scale|
+|-----------------|---------------|
+|Compute Capacity|Add additional Server Pods|
+|Intra-fabric Network Capacity|Add spine switches to Spine Planes|
+|Extra-fabric Connectivity Capacity|Add Edge Pods or scale uplinks to existing edge switches|
+
