@@ -16,6 +16,11 @@ Four Centauri comprised a Middle Block for use in the aggregation block, which w
 
 Six Centauri created a spine block, which exposed 128x40G to the aggregation blocks. Jupiter was limited to 64 aggregation blocks to allow for full dual redundancy from each spine block to each aggregation block. In its largest configuration, Jupiter supports 1.3 Pbps bisection bandwidth among servers.
 
+#### External Connectivity
+Google takes an intentional approach to incorporating and isolating connectivity to external networks (i.e., the Internet) from their fabric topology. They sought a way to connect their external routers directly to the fabric. They explored four options, depicted graphically below: (i) reserve some links from each ToR, (ii) reserve ports in each aggregation block, (iii) reserve ports in each spine block, or (iv) build a separate aggregation block for external connectivity.
 
+![Four options to connect to the external network](./images/Jupiter_external_connect.png)
+
+The decision Google went with was option (iv), to build out an isolated layer of switches to peer with external routers, so as to limit the domain against which external-facing configurations needed to be applied and against which they would need to integrate their in-house routing protocols with external routing protocols. They allocated 10% of aggregate intra-cluster bandwidth for external connectivity using one to three aggregation blocks, which are identical to the aggregation blocks used for ToR connectivity, just with the ports reallocated for external connections.
 
 ### Facebook
