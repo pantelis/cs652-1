@@ -37,6 +37,8 @@ This topology may be abstracted in two dimensions similar to below:
 
 ![2D Abstraction of Facebook topology](./images/Facebook_2d_abstract.png)
 
+In keeping the colors the same as in the 3D schematic, any edge switch connects to all of the 
+
 By "pod-ifying" their network, the modularity in the design allows for easy scaling in any dimension:
 |Capacity to Scale|Component to Scale|
 |-----------------|---------------|
