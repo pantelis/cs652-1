@@ -24,3 +24,5 @@ Google takes an intentional approach to incorporating and isolating connectivity
 The decision Google went with was option (iv), to build out an isolated layer of switches to peer with external routers, so as to limit the domain against which external-facing configurations needed to be applied and against which they would need to integrate their in-house routing protocols with external routing protocols. They allocated 10% of aggregate intra-cluster bandwidth for external connectivity using one to three aggregation blocks, which are identical to the aggregation blocks used for ToR connectivity, just with the ports reallocated for external connections.
 
 ### Facebook
+
+Where Google went with a chassis-style three-tiered Clos architecture, Facebook built their fabric network based on pods, and connecting the pods across the network.
