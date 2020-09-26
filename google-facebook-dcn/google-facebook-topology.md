@@ -6,7 +6,7 @@ Both Google and Facebook employ a three-tier Clos topology, but they implement t
 ### Google
 Google has sequenced through to their fifth generation of a fabric architecture, which they have named Jupiter. Originally deployed in 2012, Jupiter is the first iteration of their fabric architecture to support speeds of 40G, thanks to denser merchant fabric. Jupiter was also slated to scale to more than six times the size of their then-current largest fabric, an upgrade which could not happen all at once. Therefore, unique to Jupiter was that the fabric needed to support heterogeneous hardware and speeds, as well as be able to react robustly and gracefully to events in the now very broad network. 
 
-Building out Jupiter would require approaching it through individual building blocks, instead of treating the network holistically and applying the fabric-wide decisions to each individual component. Eventually, they decided to bridge between the approaches in Firehose (first- and second-generation fabric network, with each switch cabled to others) and Watchtower and Saturn (third- and fourth-generation fabric networks, with the largest possible chassis), sticking with a chassis-based Clos topology. The building blocks are seen here:
+Building out Jupiter would require approaching it through individual building blocks, instead of treating the network holistically and applying the fabric-wide decisions to each individual component. Eventually, they decided to bridge between the approaches in Firehose (first- and second-generation fabric network, with each switch cabled to others) and Watchtower and Saturn (third- and fourth-generation fabric networks, with the largest possible chassis), sticking with a chassis-based Clos topology (i.e., two upper layers of switches on top of the ToRs). The building blocks are seen here:
 
 ![Building blocks used in the Jupiter topology](./images/Jupiter_building_blocks.png)
 
@@ -25,4 +25,6 @@ The decision Google went with was option (iv), to build out an isolated layer of
 
 ### Facebook
 
-Where Google went with a chassis-style three-tiered Clos architecture, Facebook built their fabric network based on pods, and connecting the pods across the network.
+Where Google went with a chassis-style three-tiered Clos architecture, Facebook built their fabric network based on pods, and connecting the pods across the network. They define a "pod" simply as the unit of their network; it carries no physical definitions. However, the way Facebook designed their network based on these pods allowed them to take advantage of the architecture that they already had in place, using four fabric switches to support 48 ToRs in one pod:
+
+![A sample pod](./images/Facebook_sample_pod.png)
