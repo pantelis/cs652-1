@@ -33,16 +33,16 @@ Facebook designed their network with an equal amount of uplink capacity for each
 
 ![Complete schematic of fabric network topology](./images/Facebook_complete_topology.png)
 
-This topology may be abstracted in two dimensions similar to below:
+This topology may be abstracted in two dimensions similar to below.
 
 ![2D Abstraction of Facebook topology](./images/Facebook_2d_abstract.png)
 
-In keeping the colors the same as in the 3D schematic, any edge switch connects to all of the 
+In this abstraction, it is important to distinguish that the diagrammed edge switches all belong to the same edge pod; the spine switches and fabric switches each belond to different spine planes, distingguished by color; and all of the ToRs belong to the same server pod. In keeping the colors the same as in the 3D schematic, any edge switch connects to all of the spine switches on that plane. Within the spine plane, the spine switches connect to each of the fabric switches on that spine plane. The connections that are omitted from this abstraction, for simplicity sake, are the fabric switches connecting to each of the ToR switches in that server pod. Therefore, the bottom layer of this abstraction would have connections from *every* fabric switch, regardless of spine plane, to *every* ToR switch. 
 
-By "pod-ifying" their network, the modularity in the design allows for easy scaling in any dimension:
+As both the 3D schematic and this 2D abstraction show, the architecture distinguishes logical pods among the switches, indicated by the different colors on these pictures. By "pod-ifying" their network, the modularity in the design allows for easy scaling in any dimension:
+
 |Capacity to Scale|Component to Scale|
 |-----------------|---------------|
 |Compute Capacity|Add additional Server Pods|
 |Intra-fabric Network Capacity|Add spine switches to Spine Planes|
 |Extra-fabric Connectivity Capacity|Add Edge Pods or scale uplinks to existing edge switches|
-
