@@ -1,7 +1,7 @@
 ## Topology
 One of the defining characteristics of a Clos topology is *disaggregation* of the network. Traditional cluster architectures present limitations on performance and cost, usually requiring a lot more cabling and building in redundancy to cover the event of a failure. Furthermore, to meet desired bandwidth increases, the cost may be very significant. Rather than scaling up (e.g., buying a beefier box to provide more processing on the network), a Clos topology allows for the network to scale out, adding more switches to easily spread out the load across the network, and providing for multiple redundant paths to the same nodes.
 
-Both Google and Facebook employ a three-tier Clos topology, but they implement their topologies in different ways.
+Both Google and Facebook employ a multi-tier Clos topology, but they implement their topologies in different ways.
 
 ### Google
 Google has sequenced through to their fifth generation of a fabric architecture, which they have named Jupiter. Originally deployed in 2012, Jupiter is the first iteration of their fabric architecture to support speeds of 40G, thanks to denser merchant fabric. Jupiter was also slated to scale to more than six times the size of their then-current largest fabric, an upgrade which could not happen all at once. Therefore, unique to Jupiter was that the fabric needed to support heterogeneous hardware and speeds, as well as be able to react robustly and gracefully to events in the now very broad network. 
@@ -25,7 +25,7 @@ The decision Google went with was option (iv), to build out an isolated layer of
 
 ### Facebook
 
-Where Google went with a chassis-style three-tiered Clos architecture, Facebook built their fabric network based on pods, and connecting the pods across the network. They define a "pod" simply as the unit of their network; it carries no physical definitions. However, the way Facebook designed their network based on these pods allowed them to take advantage of the architecture that they already had in place, using four fabric switches to support 48 ToRs in one pod. This pod unit is smaller than the previous cluster unit, allowing for easy integration into the datacenter floor plan. Furthermore, the architecture requires only mid-size switches to aggregate the ToRs into these pods, again citing the ease of scaling out over scaling up.
+Where Google went with a chassis-style Clos architecture, Facebook built their fabric network based on pods, and connecting the pods across the network. They define a "pod" simply as the unit of their network; it carries no physical definitions. However, the way Facebook designed their network based on these pods allowed them to take advantage of the architecture that they already had in place, using four fabric switches to support 48 ToRs in one pod. This pod unit is smaller than the previous cluster unit, allowing for easy integration into the datacenter floor plan. Furthermore, the architecture requires only mid-size switches to aggregate the ToRs into these pods, again citing the ease of scaling out over scaling up.
 
 ![A sample pod](./images/Facebook_sample_pod.png)
 
@@ -46,3 +46,6 @@ As both the 3D schematic and this 2D abstraction show, the architecture distingu
 |Compute Capacity|Add additional Server Pods|
 |Intra-fabric Network Capacity|Add spine switches to Spine Planes|
 |Extra-fabric Connectivity Capacity|Add Edge Pods or scale uplinks to existing edge switches|
+
+### Conclusion
+As we can see, Google and Facebook diverged in their approaches to implementing a Clos architecture in their datacenter networks. Google focused on the chassis, determining how to connect the switches at the upper layers of their topology to spread the traffic across the entire network, irrespective of what was at the edge of the network (e.g., ToR switches or external-connecting routers). Facebook, on the other hand, took a pod-based approach, "pod-ifying" the middle layers of their topology to establish this as the unit of their network. This "pod-ifying" spread to the top- and bottom-most layers in their architecture as well, providing connections to the edge switches in edge pods and the ToRs in server pods.
