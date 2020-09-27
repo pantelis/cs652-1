@@ -1,5 +1,5 @@
-## Topology
-One of the defining characteristics of a Clos topology is *disaggregation* of the network. Traditional cluster architectures present limitations on performance and cost, usually requiring a lot more cabling and building in redundancy to cover the event of a failure. Furthermore, to meet desired bandwidth increases, the cost may be very significant. Rather than scaling up (e.g., buying a beefier box to provide more processing on the network), a Clos topology allows for the network to scale out, adding more switches to easily spread out the load across the network, and providing for multiple redundant paths to the same nodes.
+## Topology <!---Theodore Wagner CS652--->
+One of the defining characteristics of a Clos topology is *disaggregation* of the network. Traditional cluster architectures present limitations on performance and cost, usually requiring a lot more cabling and building in redundancy to cover the event of a failure. Furthermore, to meet desired bandwidth increases, the cost may be very significant to purchase higher powered equipment. Rather than scaling up (i.e., buying a beefier box to provide more processing on the network), a Clos topology allows for the network to scale out, adding more switches to easily spread out the load across the network, and providing for multiple redundant paths to the same nodes.
 
 Both Google and Facebook employ a multi-tier Clos topology, but they implement their topologies in different ways.
 
