@@ -11,7 +11,7 @@ Building out Jupiter would require approaching it through individual building bl
 
 ![Building blocks used in the Jupiter topology](./images/Jupiter_building_blocks.png)
 
-The unit of deployment, named Centauri, had four switch chips with 16x40G ports. The ports could be configured as 4x10G or 40G mode, with all ports accessible on the front panel of the chassis. Employed as a ToR, the Centauri chassis was configured with each switch chip as a separate subnet of machines, for organizational purposes. Each chip was configured with 48x10G for server-facing ports and 16x10G for fabric-facing ports. 
+The unit of deployment, named Centauri, had four switch chips with 16x40G ports. The ports could be configured as 4x10G or 40G mode, with all ports accessible on the front panel of the chassis. Employed as a ToR, the Centauri switch was configured with each switch chip as a separate subnet of machines, for organizational purposes. Each chip was configured with 48x10G for server-facing ports and 16x10G for fabric-facing ports. 
 
 Four Centauri comprised a Middle Block for use in the aggregation block, which was designed as a 2-stage blocking network with 256x10G available for ToR and 64x40G available for the fabric. Each ToR chip connected to eight Middle Blocks, with dual redundant links. Each aggregation block exposed 40G ports to the spine blocks, at either *full pop* with 512 ports available or *depop*, which had half of this number, 256.
 
