@@ -1,4 +1,5 @@
 ## Control Plane
+<!---Theodore Wagner CS652--->
 Considering the control plane in the new datacenter architectures, at a high level, IP addressing and other layer 3 mechanisms won out, becoming the basis for forwarding between the different switches to the end server. Early on in the planning of their datacenter network architectures, Google and Facebook diverged. Both companies started by evaluating the use of existing protocols versus developing their own. In the case of Google, the decision was to develop their own. In the case of Facebook, they chose to use standard protocols that were already established. These decisions are broken down below.
 
 ### Google
