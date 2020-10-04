@@ -8,9 +8,6 @@ sudo apt update && sudo apt upgrade -y
 # 2) The sudoers file has been modified
 # 3) Configuring grub-pc
 
-sudo apt install python-pip -y
-#This installs pip, which will be used to install Ryu
-
 sudo apt install python-pip python-dev libxml2-dev libxslt-dev zlib1g-deb -y
 #Dependencies for Ryu
 
