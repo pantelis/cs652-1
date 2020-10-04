@@ -11,7 +11,7 @@ sudo apt update && sudo apt upgrade -y
 sudo apt install python-pip -y
 #This installs pip, which will be used to install Ryu
 
-sudo apt install python-dev libxml2-dev libxslt-dev zlib1g-deb -y
+sudo apt install python-pip python-dev libxml2-dev libxslt-dev zlib1g-deb -y
 #Dependencies for Ryu
 
 git clone https://github.com/faucetsdn/ryu.git
@@ -65,6 +65,14 @@ sudo pip install 'msgpack==0.5.0'
 #eventlet>=0.18.2,!=0.18.3,!=0.20.1,!=0.21.0,!=0.23.0
 sudo pip install 'eventlet==0.18.2'
 
+#greenlet
+#greenlet>=0.3
+wget https://files.pythonhosted.org/packages/9f/29/c8d0b051afacd0108c26a89824a13fa041299b61e8d9e50a6a35e25c4ec1/greenlet-0.3.tar.gz
+tar -xzf greenlet-0.3.tar.gz && rm greenlet-0.3.tar.gz
+cd greenlet-0.3
+sudo python ./setup.py install
+cd ../
+
 #stevedore Distribution Not Found
 #stevedore>=1.5.0
 sudo pip install 'stevedore==1.5.0'
@@ -75,10 +83,7 @@ sudo pip install 'zipp==0.4'
 
 
 #At this point, you can finally run `ryu-manager` without any additional Distribution Not Found errors
-#Uncomment to test:
-#
-#ryu-manager ./ryu/ryu/app/simple_switch.py
-#
+ryu-manager ./ryu/ryu/app/simple_switch.py
 #
 #Can run this command in concert with, in another terminal:
 #
