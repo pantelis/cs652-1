@@ -16,29 +16,22 @@ sudo apt install python-pip python-dev libxml2-dev libxslt-dev zlib1g-dev -y
 #Dependencies for Ryu
 
 git clone https://github.com/faucetsdn/ryu.git
-cd ryu
-#Clones the source code for Ryu from GitHub and changes into that directory
-
-sudo python ./setup.py install
+sudo python ./ryu/setup.py install
 #Runs the setup script from the ryu directory
 
-sudo pip install -r ./tools/pip-requires
+sudo pip install -r ./ryu/tools/pip-requires
 #In the Ryu source code, there is a file in the tools directory called pip-requires
 #This contains additional requirements for pip packages to be installed
 
+
+#Several of the pip-requirements fail. These are handled individually below.
+
 #oslo.config error
 #These steps will handle oslo.config error by manually installing a working version
-cd ../ 
-#get out of the ryu directory
-
 wget https://files.pythonhosted.org/packages/69/2a/727e8c396f831e51f79486e88588944f2553e43335d07cc1542442ac897a/oslo.config-2.5.0.tar.gz
 tar -xzf oslo.config-2.5.0.tar.gz && rm oslo.config-2.5.0.tar.gz
-cd oslo.config-2.5.0
-sudo python ./setup.py install
-cd ../
-#get out of the oslo.config-2.5.0 directory
+sudo python ./oslo.config-2.5.0/setup.py install
 
-#Individual problems
 #webob Distribution Not Found
 #webob>=1.2
 sudo pip install 'webob==1.2'
@@ -70,9 +63,7 @@ sudo pip install 'eventlet==0.18.2'
 #greenlet>=0.3
 wget https://files.pythonhosted.org/packages/9f/29/c8d0b051afacd0108c26a89824a13fa041299b61e8d9e50a6a35e25c4ec1/greenlet-0.3.tar.gz
 tar -xzf greenlet-0.3.tar.gz && rm greenlet-0.3.tar.gz
-cd greenlet-0.3
-sudo python ./setup.py install
-cd ../
+sudo python ./greenlet-0.3/setup.py install
 
 #stevedore Distribution Not Found
 #stevedore>=1.5.0
