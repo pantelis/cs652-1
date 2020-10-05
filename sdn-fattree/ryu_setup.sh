@@ -2,11 +2,15 @@
 #This script should set up pip and Ryu properly
 #This script should be run immediately after importing the Mininet OVF as a new VM
 
-sudo apt update && sudo apt upgrade -y
+
+#sudo apt update && sudo apt upgrade -y
 #There will be user intervention required for:
-# 1) Configuring wireshark-common
-# 2) The sudoers file has been modified
-# 3) Configuring grub-pc
+# 1) Configuring wireshark-common (0%)
+# 2) The sudoers file has been modified (88%)
+# 3) Configuring grub-pc (95%)
+
+sudo apt update && sudo DEBIAN_FRONTEND=noninteractive apt -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
+#Accomplishes 100% non-interactive `sudo apt update && sudo apt upgrade -y`
 
 sudo apt install python-pip python-dev libxml2-dev libxslt-dev zlib1g-deb -y
 #Dependencies for Ryu
