@@ -16,7 +16,7 @@ sudo apt install python-pip python-dev libxml2-dev libxslt-dev zlib1g-dev -y
 #Dependencies for Ryu
 
 git clone https://github.com/faucetsdn/ryu.git
-sudo python ./ryu/setup.py install
+cd ryu && sudo python ./setup.py install && cd ../
 #Runs the setup script from the ryu directory
 
 sudo pip install -r ./ryu/tools/pip-requires
