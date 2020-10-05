@@ -30,7 +30,7 @@ sudo pip install -r ./ryu/tools/pip-requires
 #These steps will handle oslo.config error by manually installing a working version
 wget https://files.pythonhosted.org/packages/69/2a/727e8c396f831e51f79486e88588944f2553e43335d07cc1542442ac897a/oslo.config-2.5.0.tar.gz
 tar -xzf oslo.config-2.5.0.tar.gz && rm oslo.config-2.5.0.tar.gz
-sudo python ./oslo.config-2.5.0/setup.py install
+cd ./oslo.config-2.5.0 && sudo python ./setup.py install && cd ../
 
 #webob Distribution Not Found
 #webob>=1.2
@@ -63,7 +63,7 @@ sudo pip install 'eventlet==0.18.2'
 #greenlet>=0.3
 wget https://files.pythonhosted.org/packages/9f/29/c8d0b051afacd0108c26a89824a13fa041299b61e8d9e50a6a35e25c4ec1/greenlet-0.3.tar.gz
 tar -xzf greenlet-0.3.tar.gz && rm greenlet-0.3.tar.gz
-sudo python ./greenlet-0.3/setup.py install
+cd ./greenlet-0.3 && sudo python ./setup.py install && cd ../
 
 #stevedore Distribution Not Found
 #stevedore>=1.5.0
