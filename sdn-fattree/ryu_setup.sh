@@ -12,7 +12,7 @@
 sudo apt update && sudo DEBIAN_FRONTEND=noninteractive apt -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" dist-upgrade
 #Accomplishes 100% non-interactive `sudo apt update && sudo apt upgrade -y`
 
-sudo apt install python-pip python-dev libxml2-dev libxslt-dev zlib1g-deb -y
+sudo apt install python-pip python-dev libxml2-dev libxslt-dev zlib1g-dev -y
 #Dependencies for Ryu
 
 git clone https://github.com/faucetsdn/ryu.git
