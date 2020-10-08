@@ -28,7 +28,7 @@ class FatTree(Topo):
 			podhosts = []
 			
 			for s in range(k): #s = switch number within pod, dpid = 00:00:00:00:00:p:s:01
-				sdpid = "00:00:00:00:00:"+str(p).zfill(2)+":"+str(s).zfill(2)+":01"
+				sdpid = "00:00:00:00:00:{:02}:{:02}:01".format(p,s)
 				if(s<k/2):
 					podedges.append(self.addSwitch('e' + str(ec), dpid='%x' & sdpid))
 					ec += 1
@@ -57,7 +57,7 @@ class FatTree(Topo):
 		cc = 0
 		for j in range(1, k/2+1):
 			for i in range(1, k/2+1):
-				cdpid = "00:00:00:00:00:"+str(k).zfill(2)+":"+str(j).zfill(2)":"+str(i).zfill(2)
+				cdpid = "00:00:00:00:00:{:02}:{:02}:{:02}".format(j, k, i)
 				corepod.append(self.addSwitch('c' + str(cc), dpid='%x' & cdpid))
 				cc += 1
 		
