@@ -30,10 +30,10 @@ class FatTree(Topo):
 			for s in range(k): #s = switch number within pod, dpid = 00:00:00:00:00:p:s:01
 				sdpid = "00:00:00:00:00:{:02}:{:02}:01".format(p,s)
 				if(s<k/2):
-					podedges.append(self.addSwitch('e' + str(ec), dpid='%x' % sdpid))
+					podedges.append(self.addSwitch('e' + str(ec), dpid=sdpid))
 					ec += 1
 				else:
-					podaggs.append(self.addSwitch('a' + str(ac), dpid='%x' % sdpid))
+					podaggs.append(self.addSwitch('a' + str(ac), dpid=sdpid))
 					ac += 1
 					
 			for e in range(len(podedges)): #e = edge switch that hosts will connect to, IP = 10.p.e.x
@@ -58,7 +58,7 @@ class FatTree(Topo):
 		for j in range(1, k/2+1):
 			for i in range(1, k/2+1):
 				cdpid = "00:00:00:00:00:{:02}:{:02}:{:02}".format(j, k, i)
-				corepod.append(self.addSwitch('c' + str(cc), dpid='%x' % cdpid))
+				corepod.append(self.addSwitch('c' + str(cc), dpid=cdpid))
 				cc += 1
 		
 		'''
