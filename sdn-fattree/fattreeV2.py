@@ -69,28 +69,6 @@ class FatTree(Topo):
 		 - every aggregation switch with every edge switch within a pod
 		 - nth edge switch with nth set of k/2 hosts
 			e.g., e0->h0,h1; e1->h2,h3; e2->h4,h5; e3->h6,h7
-
-		#Core to Aggregation Links
-		for p in range(len(pods)):
-			coff = 0
-			for agg in pods[p]["aggs"]:
-				for i in range(k/2):
-					self.addLink(agg,corepod[i+coff])
-				coff += k/2
-		
-		#Aggregation to Edge Links
-		for p in range(len(pods)):
-			for agg in pods[p]["aggs"]:
-				for edge in pods[p]["edges"]:
-					self.addLink(agg,edge)
-		
-		#Edge to Host Links
-		for p in range(len(pods)):
-			hoff = 0
-			for edge in pods[p]["edges"]:
-				for j in range(k/2):
-					self.addLink(edge, pods[p]["hosts"][j+hoff])
-				hoff += k/2
 		'''
 		for pod in pods.values():
 			coff = 0
