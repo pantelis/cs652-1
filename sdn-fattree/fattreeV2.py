@@ -38,7 +38,7 @@ class FatTree(Topo):
 					
 			for e in range(len(podedges)): #e = edge switch that hosts will connect to, IP = 10.p.e.x
 				for x in range(2,k/2+1):
-					hip = "10."+str(p)+"."+str(e)+"."+str(x)
+					hip = "10.{}.{}.{}".format(p,e,x)
 					host = self.addHost('h' + str(hc))
 					host.setIP(self,hip,prefixLen=24)
 					podhosts.append(host)
