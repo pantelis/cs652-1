@@ -82,7 +82,7 @@ class FatTree(Topo):
 					#Aggregation to Edge links
 					self.addLink(agg,edge)
 					
-					if(not Edgehost):
+					if(not edgehost):
 						for j in range(k/2):
 							#Edge to Host links
 							self.addLink(edge,pod["hosts"][j+hoff])
