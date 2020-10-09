@@ -81,10 +81,9 @@ class FatTree(Topo):
 					#Aggregation to Edge links
 					self.addLink(agg,edge)
 					
-					for j in range(len(pod["hosts"])):
+					for j in range(k/2):
 						#Edge to Host links
-						if j<k**2/4:
-							self.addLink(edge, pod["hosts"][j+hoff])
-					hoff += k**2/4
+						self.addLink(edge,pod["hosts"][j+hoff])
+					hoff += k/2
 
 topos = {'fattree': FatTree}
