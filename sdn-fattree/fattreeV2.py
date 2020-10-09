@@ -70,7 +70,6 @@ class FatTree(Topo):
 		'''
 		for pod in pods.values():
 			coff = 0
-			edgehost = False
 			for agg in pod["aggs"]:
 				for i in range(k/2):
 					#Aggregation to Core links
@@ -82,12 +81,10 @@ class FatTree(Topo):
 					#Aggregation to Edge links
 					self.addLink(agg,edge)
 					
-					if(not edgehost):
-						for j in range(k/2):
-							#Edge to Host links
-							self.addLink(edge,pod["hosts"][j+hoff])
-						hoff += k/2
-						edgehost = not edgehost
+					for j in range(k/2):
+						#Edge to Host links
+						self.addLink(edge,pod["hosts"][j+hoff])
+					hoff += k/2
 
 
 topos = {'fattree': FatTree}
