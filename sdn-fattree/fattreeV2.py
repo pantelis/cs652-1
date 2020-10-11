@@ -55,7 +55,7 @@ class FatTree(Topo):
 		cc = 0
 		for j in range(1, k/2+1):
 			for i in range(1, k/2+1):
-				cdpid = "00:00:00:00:00:{:02}:{:02}:{:02}".format(j, k, i)
+				cdpid = "00:00:00:00:00:{:02}:{:02}:{:02}".format(k, j, i)
 				corepod.append(self.addSwitch('c' + str(cc), dpid=cdpid))
 				cc += 1
 		
