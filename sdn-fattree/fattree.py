@@ -67,24 +67,39 @@ class FatTree(Topo):
 		 - every aggregation switch with every edge switch within a pod
 		 - nth edge switch with nth set of k/2 hosts
 			e.g., e0->h0,h1; e1->h2,h3; e2->h4,h5; e3->h6,h7
+		
+		Specifying the port numbers for the links:
+		In pod p:
+		 - aggA:ports<k/2 - coreC:port p
+			equivalent to: coreC:port p - aggA:ports < k/2
+			core switch connects to pod p on port p
+			agg switch uses small number ports to connect to cores
+			consecutive agg ports connect to the core switches in k/2 strides (e.g., a0:0-core, a0:1-core, a1:0-core, a1:1-core)
+		 - aggA:ports>=k/2 - edgeE:port aggA
+			agg switch uses large number ports to connect to edges
+			edges connect using port A to connect to aggA
+			each edge connection is the same (e.g., e0:0-a0, e1:0-a0, e0:1-a1, e1:1-a1)
+		 - edgeE:ports>=k/2 - hostH (host port negligible)
+			edge switch uses large number ports to connect to hosts
+			host port negligible for generating the flow table, as flow table only needs to know what is connected to each switch port number (winds up being port 0, experimentally)
 		'''
-		for pod in pods.values():
+		for p in range(len(pods)):
 			coff = 0
-			for agg in pod["aggs"]:
+			for a in range(len(pods[p]["aggs"])):
 				for i in range(k/2):
 					#Aggregation to Core links
-					self.addLink(agg,corepod[i+coff])
+					self.addLink(pods[p]["aggs"][a],corepod[i+coff],i,p)
 				coff += k/2
 				
-				for edge in pod["edges"]:
+				for d in range(len(pods[p]["edges"])):
 					#Aggregation to Edge links
-					self.addLink(agg,edge)
+					self.addLink(pods[p]["aggs"][a],pods[p]["edges"][d],d+k/2,a)
 					
 			hoff = 0
-			for edge in pod["edges"]:
+			for e in range(len(pods[p]["edges"])):
 				for j in range(k/2):
 					#Edge to Host links
-					self.addLink(edge,pod["hosts"][j+hoff])
+					self.addLink(pods[p]["edges"][e],pods[p]["hosts"][j+hoff],j+k/2)
 				hoff += k/2
 
 
