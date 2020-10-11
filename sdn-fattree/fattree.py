@@ -82,6 +82,7 @@ class FatTree(Topo):
 		 - edgeE:ports>=k/2 - hostH (host port negligible)
 			edge switch uses large number ports to connect to hosts
 			host port negligible for generating the flow table, as flow table only needs to know what is connected to each switch port number (winds up being port 0, experimentally)
+			*** edgeE:port x --> host IP 10.p.s.x
 		'''
 		for p in range(len(pods)):
 			coff = 0
