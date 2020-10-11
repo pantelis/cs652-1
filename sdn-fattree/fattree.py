@@ -70,30 +70,32 @@ class FatTree(Topo):
 		
 		Specifying the port numbers for the links:
 		In pod p:
-		 - aggA:ports<k/2 - coreC:port p
-			equivalent to: coreC:port p - aggA:ports < k/2
+		 - aggA:ports>=k/2 - coreC:port p
+			equivalent to: coreC:port p - aggA:ports >= k/2
 			core switch connects to pod p on port p
-			agg switch uses small number ports to connect to cores
-			consecutive agg ports connect to the core switches in k/2 strides (e.g., a0:0-core, a0:1-core, a1:0-core, a1:1-core)
-		 - aggA:ports>=k/2 - edgeE:port aggA
-			agg switch uses large number ports to connect to edges
-			edges connect using port A to connect to aggA
-			each edge connection is the same (e.g., e0:0-a0, e1:0-a0, e0:1-a1, e1:1-a1)
+			agg switch uses large number ports to connect to cores, to accommodate ease of connection agg to edge
+			consecutive agg ports connect to the core switches in k/2 strides (e.g., a0:2-core, a0:3-core, a1:2-core, a1:3-core)
+		 - aggA:port E- edgeE:port A
+			agg switch connects to edge using port corresponding to edge index/DPID switch number
+			edge switch connect to agg using port number corrsponding to agg index/DPID switch number - (k/2)
+			each edge switch connects the same (e.g., e0:0-a0, e1:0-a0, e0:1-a1, e1:1-a1)
+			each agg switch connects the same (e.g., a0:0-e0, a0:1-e1, a1:0-e0, a1:1-e1)
 		 - edgeE:ports>=k/2 - hostH (host port negligible)
 			edge switch uses large number ports to connect to hosts
 			host port negligible for generating the flow table, as flow table only needs to know what is connected to each switch port number (winds up being port 0, experimentally)
+			*** eE:port x --> host IP 10.p.s.x
 		'''
 		for p in range(len(pods)):
 			coff = 0
 			for a in range(len(pods[p]["aggs"])):
 				for i in range(k/2):
 					#Aggregation to Core links
-					self.addLink(pods[p]["aggs"][a],corepod[i+coff],i,p)
+					self.addLink(pods[p]["aggs"][a],corepod[i+coff],int(k/2)+i,p)
 				coff += k/2
 				
 				for d in range(len(pods[p]["edges"])):
 					#Aggregation to Edge links
-					self.addLink(pods[p]["aggs"][a],pods[p]["edges"][d],d+k/2,a)
+					self.addLink(pods[p]["aggs"][a],pods[p]["edges"][d],d,a)
 					
 			hoff = 0
 			for e in range(len(pods[p]["edges"])):
